@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PhoneNumbers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Number" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ContactId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__PhoneNumb__Conta__01142BA1">
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="1" />
+          <End Role="PhoneNumbers" Type="Self.PhoneNumbers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contacts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhoneNumbers">
+              <PropertyRef Name="ContactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseModelStoreContainer">
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhoneNumbers" EntityType="Self.PhoneNumbers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__PhoneNumb__Conta__01142BA1" Association="Self.FK__PhoneNumb__Conta__01142BA1">
+            <End Role="Contacts" EntitySet="Contacts" />
+            <End Role="PhoneNumbers" EntitySet="PhoneNumbers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Contacts" EntityType="DatabaseModel.Contact" />
+          <EntitySet Name="PhoneNumbers" EntityType="DatabaseModel.PhoneNumber" />
+          <AssociationSet Name="FK__PhoneNumb__Conta__01142BA1" Association="DatabaseModel.FK__PhoneNumb__Conta__01142BA1">
+            <End Role="Contact" EntitySet="Contacts" />
+            <End Role="PhoneNumber" EntitySet="PhoneNumbers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PhoneNumbers" Relationship="DatabaseModel.FK__PhoneNumb__Conta__01142BA1" FromRole="Contact" ToRole="PhoneNumber" />
+        </EntityType>
+        <EntityType Name="PhoneNumber">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contact" Relationship="DatabaseModel.FK__PhoneNumb__Conta__01142BA1" FromRole="PhoneNumber" ToRole="Contact" />
+        </EntityType>
+        <Association Name="FK__PhoneNumb__Conta__01142BA1">
+          <End Type="DatabaseModel.Contact" Role="Contact" Multiplicity="1" />
+          <End Type="DatabaseModel.PhoneNumber" Role="PhoneNumber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contact">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhoneNumber">
+              <PropertyRef Name="ContactId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="DatabaseModel.Contact">
+              <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhoneNumbers">
+            <EntityTypeMapping TypeName="DatabaseModel.PhoneNumber">
+              <MappingFragment StoreEntitySet="PhoneNumbers">
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
