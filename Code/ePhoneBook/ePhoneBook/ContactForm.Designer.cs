@@ -31,8 +31,8 @@
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label label2;
             System.Windows.Forms.Label label3;
-            Telerik.WinControls.UI.ListViewDetailColumn listViewDetailColumn1 = new Telerik.WinControls.UI.ListViewDetailColumn("Column 0", "Title");
-            Telerik.WinControls.UI.ListViewDetailColumn listViewDetailColumn2 = new Telerik.WinControls.UI.ListViewDetailColumn("Column 1", "Number");
+            Telerik.WinControls.UI.ListViewDetailColumn listViewDetailColumn3 = new Telerik.WinControls.UI.ListViewDetailColumn("Column 0", "Title");
+            Telerik.WinControls.UI.ListViewDetailColumn listViewDetailColumn4 = new Telerik.WinControls.UI.ListViewDetailColumn("Column 1", "Number");
             this.phoneNumbersLV = new Telerik.WinControls.UI.RadListView();
             this.firstNameLbl = new System.Windows.Forms.Label();
             this.lastNameLbl = new System.Windows.Forms.Label();
@@ -75,14 +75,14 @@
             this.phoneNumbersLV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            listViewDetailColumn1.HeaderText = "Title";
-            listViewDetailColumn1.Width = 75F;
-            listViewDetailColumn2.HeaderText = "Number";
-            listViewDetailColumn2.MinWidth = 50F;
-            listViewDetailColumn2.Width = 150F;
+            listViewDetailColumn3.HeaderText = "Title";
+            listViewDetailColumn3.Width = 75F;
+            listViewDetailColumn4.HeaderText = "Number";
+            listViewDetailColumn4.MinWidth = 50F;
+            listViewDetailColumn4.Width = 150F;
             this.phoneNumbersLV.Columns.AddRange(new Telerik.WinControls.UI.ListViewDetailColumn[] {
-            listViewDetailColumn1,
-            listViewDetailColumn2});
+            listViewDetailColumn3,
+            listViewDetailColumn4});
             this.phoneNumbersLV.ItemSpacing = -1;
             this.phoneNumbersLV.Location = new System.Drawing.Point(12, 74);
             this.phoneNumbersLV.Name = "phoneNumbersLV";
@@ -126,6 +126,7 @@
             // 
             // 
             this.RootElement.ApplyShapeToControl = true;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ContactForm";
             ((System.ComponentModel.ISupportInitialize)(this.phoneNumbersLV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();

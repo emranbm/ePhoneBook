@@ -96,6 +96,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseModels\Contact.cs" />
+    <Compile Include="DatabaseModels\PhoneNumber.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

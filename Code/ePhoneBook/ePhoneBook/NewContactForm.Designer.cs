@@ -39,8 +39,8 @@
             this.firstNameTB = new System.Windows.Forms.TextBox();
             this.lastNameTB = new System.Windows.Forms.TextBox();
             this.phoneNumbersLV = new Telerik.WinControls.UI.RadListView();
-            this.radDropDownList1 = new Telerik.WinControls.UI.RadDropDownList();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.titleDD = new Telerik.WinControls.UI.RadDropDownList();
+            this.numberTB = new System.Windows.Forms.TextBox();
             this.addBtn = new Telerik.WinControls.UI.RadButton();
             this.saveBtn = new Telerik.WinControls.UI.RadButton();
             this.removeBtn = new Telerik.WinControls.UI.RadButton();
@@ -49,7 +49,7 @@
             label2 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.phoneNumbersLV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radDropDownList1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.titleDD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.addBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.saveBtn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.removeBtn)).BeginInit();
@@ -65,24 +65,6 @@
             label1.Size = new System.Drawing.Size(64, 13);
             label1.TabIndex = 0;
             label1.Text = "First Name:";
-            // 
-            // firstNameTB
-            // 
-            this.firstNameTB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.firstNameTB.Location = new System.Drawing.Point(82, 12);
-            this.firstNameTB.Name = "firstNameTB";
-            this.firstNameTB.Size = new System.Drawing.Size(216, 20);
-            this.firstNameTB.TabIndex = 0;
-            // 
-            // lastNameTB
-            // 
-            this.lastNameTB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lastNameTB.Location = new System.Drawing.Point(82, 38);
-            this.lastNameTB.Name = "lastNameTB";
-            this.lastNameTB.Size = new System.Drawing.Size(216, 20);
-            this.lastNameTB.TabIndex = 1;
             // 
             // label2
             // 
@@ -101,6 +83,24 @@
             label3.Size = new System.Drawing.Size(87, 13);
             label3.TabIndex = 4;
             label3.Text = "Phone Number:";
+            // 
+            // firstNameTB
+            // 
+            this.firstNameTB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.firstNameTB.Location = new System.Drawing.Point(82, 12);
+            this.firstNameTB.Name = "firstNameTB";
+            this.firstNameTB.Size = new System.Drawing.Size(216, 20);
+            this.firstNameTB.TabIndex = 0;
+            // 
+            // lastNameTB
+            // 
+            this.lastNameTB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lastNameTB.Location = new System.Drawing.Point(82, 38);
+            this.lastNameTB.Name = "lastNameTB";
+            this.lastNameTB.Size = new System.Drawing.Size(216, 20);
+            this.lastNameTB.TabIndex = 1;
             // 
             // phoneNumbersLV
             // 
@@ -121,28 +121,32 @@
             this.phoneNumbersLV.TabIndex = 5;
             this.phoneNumbersLV.Text = "radListView1";
             this.phoneNumbersLV.ViewType = Telerik.WinControls.UI.ListViewType.DetailsView;
+            this.phoneNumbersLV.SelectedItemChanged += new System.EventHandler(this.phoneNumbersLV_SelectedItemChanged);
+            this.phoneNumbersLV.KeyUp += new System.Windows.Forms.KeyEventHandler(this.phoneNumbersLV_KeyUp);
             // 
-            // radDropDownList1
+            // titleDD
             // 
             radListDataItem4.Text = "Home";
             radListDataItem5.Text = "Mobile";
             radListDataItem6.Text = "Work";
-            this.radDropDownList1.Items.Add(radListDataItem4);
-            this.radDropDownList1.Items.Add(radListDataItem5);
-            this.radDropDownList1.Items.Add(radListDataItem6);
-            this.radDropDownList1.Location = new System.Drawing.Point(12, 91);
-            this.radDropDownList1.Name = "radDropDownList1";
-            this.radDropDownList1.Size = new System.Drawing.Size(87, 20);
-            this.radDropDownList1.TabIndex = 3;
+            this.titleDD.Items.Add(radListDataItem4);
+            this.titleDD.Items.Add(radListDataItem5);
+            this.titleDD.Items.Add(radListDataItem6);
+            this.titleDD.Location = new System.Drawing.Point(12, 91);
+            this.titleDD.Name = "titleDD";
+            this.titleDD.Size = new System.Drawing.Size(87, 20);
+            this.titleDD.TabIndex = 2;
+            this.titleDD.Text = "Mobile";
             // 
-            // textBox1
+            // numberTB
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.numberTB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(105, 91);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(193, 20);
-            this.textBox1.TabIndex = 2;
+            this.numberTB.Location = new System.Drawing.Point(105, 91);
+            this.numberTB.Name = "numberTB";
+            this.numberTB.Size = new System.Drawing.Size(193, 20);
+            this.numberTB.TabIndex = 3;
+            this.numberTB.KeyUp += new System.Windows.Forms.KeyEventHandler(this.numberTB_KeyUp);
             // 
             // addBtn
             // 
@@ -152,6 +156,7 @@
             this.addBtn.Size = new System.Drawing.Size(87, 24);
             this.addBtn.TabIndex = 4;
             this.addBtn.Text = "Add";
+            this.addBtn.Click += new System.EventHandler(this.addBtn_Click);
             // 
             // saveBtn
             // 
@@ -160,6 +165,7 @@
             this.saveBtn.Size = new System.Drawing.Size(110, 24);
             this.saveBtn.TabIndex = 6;
             this.saveBtn.Text = "Save";
+            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
             // 
             // removeBtn
             // 
@@ -170,6 +176,7 @@
             this.removeBtn.Size = new System.Drawing.Size(110, 24);
             this.removeBtn.TabIndex = 5;
             this.removeBtn.Text = "Remove Selected";
+            this.removeBtn.Click += new System.EventHandler(this.removeBtn_Click);
             // 
             // cancelBtn
             // 
@@ -192,8 +199,8 @@
             this.Controls.Add(this.removeBtn);
             this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.addBtn);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.radDropDownList1);
+            this.Controls.Add(this.numberTB);
+            this.Controls.Add(this.titleDD);
             this.Controls.Add(this.phoneNumbersLV);
             this.Controls.Add(label3);
             this.Controls.Add(this.lastNameTB);
@@ -205,9 +212,10 @@
             // 
             // 
             this.RootElement.ApplyShapeToControl = true;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "New Contact";
             ((System.ComponentModel.ISupportInitialize)(this.phoneNumbersLV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radDropDownList1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.titleDD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.addBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.saveBtn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.removeBtn)).EndInit();
@@ -223,8 +231,8 @@
         private System.Windows.Forms.TextBox firstNameTB;
         private System.Windows.Forms.TextBox lastNameTB;
         private Telerik.WinControls.UI.RadListView phoneNumbersLV;
-        private Telerik.WinControls.UI.RadDropDownList radDropDownList1;
-        private System.Windows.Forms.TextBox textBox1;
+        private Telerik.WinControls.UI.RadDropDownList titleDD;
+        private System.Windows.Forms.TextBox numberTB;
         private Telerik.WinControls.UI.RadButton addBtn;
         private Telerik.WinControls.UI.RadButton saveBtn;
         private Telerik.WinControls.UI.RadButton removeBtn;

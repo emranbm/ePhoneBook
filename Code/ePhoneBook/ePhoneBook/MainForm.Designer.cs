@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.Label label1;
-            Telerik.WinControls.UI.ListViewDetailColumn listViewDetailColumn4 = new Telerik.WinControls.UI.ListViewDetailColumn("Column 0", "First Name");
-            Telerik.WinControls.UI.ListViewDetailColumn listViewDetailColumn5 = new Telerik.WinControls.UI.ListViewDetailColumn("Column 1", "Last Name");
-            Telerik.WinControls.UI.ListViewDetailColumn listViewDetailColumn6 = new Telerik.WinControls.UI.ListViewDetailColumn("Column 2", "Phone Number");
+            Telerik.WinControls.UI.ListViewDetailColumn listViewDetailColumn1 = new Telerik.WinControls.UI.ListViewDetailColumn("Column 0", "First Name");
+            Telerik.WinControls.UI.ListViewDetailColumn listViewDetailColumn2 = new Telerik.WinControls.UI.ListViewDetailColumn("Column 1", "Last Name");
+            Telerik.WinControls.UI.ListViewDetailColumn listViewDetailColumn3 = new Telerik.WinControls.UI.ListViewDetailColumn("Column 2", "Phone Number");
             this.searchTB = new System.Windows.Forms.TextBox();
             this.contactsLV = new Telerik.WinControls.UI.RadListView();
             this.newContactBtn = new Telerik.WinControls.UI.RadButton();
@@ -62,13 +62,13 @@
             // 
             // contactsLV
             // 
-            listViewDetailColumn4.HeaderText = "First Name";
-            listViewDetailColumn5.HeaderText = "Last Name";
-            listViewDetailColumn6.HeaderText = "Phone Number";
+            listViewDetailColumn1.HeaderText = "First Name";
+            listViewDetailColumn2.HeaderText = "Last Name";
+            listViewDetailColumn3.HeaderText = "Phone Number";
             this.contactsLV.Columns.AddRange(new Telerik.WinControls.UI.ListViewDetailColumn[] {
-            listViewDetailColumn4,
-            listViewDetailColumn5,
-            listViewDetailColumn6});
+            listViewDetailColumn1,
+            listViewDetailColumn2,
+            listViewDetailColumn3});
             this.contactsLV.EnableFiltering = true;
             this.contactsLV.Location = new System.Drawing.Point(12, 38);
             this.contactsLV.Name = "contactsLV";
@@ -101,6 +101,7 @@
             // 
             // 
             this.RootElement.ApplyShapeToControl = true;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ePhoneBook";
             ((System.ComponentModel.ISupportInitialize)(this.contactsLV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.newContactBtn)).EndInit();
