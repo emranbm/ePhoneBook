@@ -16,6 +16,13 @@ namespace ePhoneBook
         public MainForm()
         {
             InitializeComponent();
+            SetItems();
+
+            contactsLV.FilterPredicate = Filter;
+        }
+
+        private void SetItems()
+        {
             DatabaseEntities entities = new DatabaseEntities();
             foreach (var contact in entities.Contacts.OrderBy((contact) => contact.LastName).ThenBy((contact) => contact.FirstName))
             {
@@ -28,6 +35,22 @@ namespace ePhoneBook
             Contact contact = (Contact)e.Item.Value;
             var form = new ContactForm(contact);
             form.ShowDialog(this);
+        }
+
+        private void searchTB_TextChanged(object sender, EventArgs e)
+        {
+            contactsLV.EnableFiltering = false;
+            contactsLV.EnableFiltering = true;
+        }
+
+        private bool Filter(ListViewDataItem item)
+        {
+            Contact contact = (Contact)item.Value;
+
+            if (searchTB.Text.Length == 0)
+                return true;
+            else
+                return ((contact.LastName + contact.FirstName).ToUpper().Contains(searchTB.Text.ToUpper()));
         }
     }
 }

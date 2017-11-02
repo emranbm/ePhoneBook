@@ -58,6 +58,7 @@
             this.searchTB.Name = "searchTB";
             this.searchTB.Size = new System.Drawing.Size(283, 20);
             this.searchTB.TabIndex = 1;
+            this.searchTB.TextChanged += new System.EventHandler(this.searchTB_TextChanged);
             // 
             // contactsLV
             // 
@@ -68,6 +69,7 @@
             listViewDetailColumn1,
             listViewDetailColumn2,
             listViewDetailColumn3});
+            this.contactsLV.EnableFiltering = true;
             this.contactsLV.Location = new System.Drawing.Point(12, 38);
             this.contactsLV.Name = "contactsLV";
             this.contactsLV.SelectLastAddedItem = false;
