@@ -13,23 +13,64 @@ namespace ePhoneBook
 {
     public partial class ContactForm : RadForm
     {
-        private readonly Contact _contact;
+        private readonly int _contactId;
 
-        public ContactForm(Contact contact)
+        public ContactForm(int contactId)
         {
             InitializeComponent();
-            _contact = contact;
+
+            _contactId = contactId;
 
             SetData();
         }
 
         private void SetData()
         {
-            firstNameLbl.Text = Text = _contact.FirstName;
-            lastNameLbl.Text = _contact.LastName;
-            foreach (var phoneNum in _contact.PhoneNumbers)
+            using (var entities = new DatabaseEntities())
             {
-                phoneNumbersLV.Items.Add(phoneNum.Title, phoneNum.Number);
+                Contact contact = (from c in entities.Contacts
+                                   where c.Id == _contactId
+                                   select c).First();
+
+                firstNameLbl.Text = Text = contact.FirstName;
+                lastNameLbl.Text = contact.LastName;
+                phoneNumbersLV.Items.Clear();
+                foreach (var phoneNum in contact.PhoneNumbers)
+                {
+                    phoneNumbersLV.Items.Add(phoneNum.Title, phoneNum.Number);
+                }
+            }
+        }
+
+        private void removeBtn_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show(
+                string.Format("Are you sure you want to delete {0}?", firstNameLbl.Text),
+                "Delete contact",
+                MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                var contact = new Contact() { Id = _contactId };
+                using (var entities = new DatabaseEntities())
+                {
+                    entities.Entry(contact).State = System.Data.Entity.EntityState.Deleted;
+                    entities.SaveChanges();
+                }
+
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+        }
+
+        private void editBtn_Click(object sender, EventArgs e)
+        {
+            var form = new EditContactForm(_contactId);
+            var result = form.ShowDialog(this);
+            if (result != DialogResult.Cancel)
+            {
+                DialogResult = DialogResult.OK;
+                SetData();
             }
         }
     }

@@ -54,32 +54,48 @@ namespace ePhoneBook
                 removeBtn_Click(sender, e);
         }
 
-        private void saveBtn_Click(object sender, EventArgs e)
+        protected virtual void saveBtn_Click(object sender, EventArgs e)
         {
             bool isFormValid = ValidateForm();
             if (!isFormValid)
                 return;
 
-            DatabaseEntities entities = new DatabaseEntities();
-            Contact contact = new Contact()
+            using (DatabaseEntities entities = new DatabaseEntities())
             {
-                FirstName = firstNameTB.Text,
-                LastName = lastNameTB.Text
-            };
+                Contact contact = new Contact()
+                {
+                    FirstName = firstNameTB.Text,
+                    LastName = lastNameTB.Text
+                };
 
-            var sameContacts = from c in entities.Contacts
-                               where c.FirstName == contact.FirstName
-                               && c.LastName == contact.LastName
-                               select c;
+                var sameContacts = from c in entities.Contacts
+                                   where c.FirstName == contact.FirstName
+                                   && c.LastName == contact.LastName
+                                   select c;
 
-            if (sameContacts.Any())
-            {
-                MessageBox.Show("A contact with the given name already exists", "Contact already exists");
-                // TODO merge contacts
-                return;
+                if (sameContacts.Any())
+                {
+                    MessageBox.Show("A contact with the given name already exists", "Contact already exists");
+                    // TODO merge contacts
+                    return;
+                }
+
+                var phoneNumbers = GetPhoneNumbers();
+                var arePhonesValid = ValidatePhoneNumbers(entities, phoneNumbers);
+                if (!arePhonesValid)
+                    return;
+                contact.PhoneNumbers = phoneNumbers;
+
+                entities.Contacts.Add(contact);
+                entities.SaveChanges();
             }
 
-            var phoneNumbers = GetPhoneNumbers();
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private bool ValidatePhoneNumbers(DatabaseEntities entities, IEnumerable<PhoneNumber> phoneNumbers)
+        {
             foreach (var phoneNum in phoneNumbers)
             {
                 var samePhones = from p in entities.PhoneNumbers
@@ -93,18 +109,14 @@ namespace ePhoneBook
                             phoneNum.Number),
                         "Phone number already exists");
                     // TODO merge contacts
-                    return;
+                    return false;
                 }
             }
 
-            contact.PhoneNumbers = phoneNumbers;
-
-            entities.Contacts.Add(contact);
-            entities.SaveChanges();
-            Close();
+            return true;
         }
 
-        private List<PhoneNumber> GetPhoneNumbers()
+        protected virtual List<PhoneNumber> GetPhoneNumbers()
         {
             var list = new List<PhoneNumber>();
 
@@ -120,7 +132,7 @@ namespace ePhoneBook
             return list;
         }
 
-        private bool ValidateForm()
+        protected bool ValidateForm()
         {
             if (firstNameTB.Text == string.Empty)
             {

@@ -23,18 +23,23 @@ namespace ePhoneBook
 
         private void SetItems()
         {
-            DatabaseEntities entities = new DatabaseEntities();
-            foreach (var contact in entities.Contacts.OrderBy((contact) => contact.LastName).ThenBy((contact) => contact.FirstName))
-            {
-                contactsLV.Items.Add(contact);
-            }
+            contactsLV.Items.Clear();
+            using (DatabaseEntities entities = new DatabaseEntities())
+                foreach (var contact in entities.Contacts.OrderBy((contact) => contact.LastName).ThenBy((contact) => contact.FirstName))
+                {
+                    contactsLV.Items.Add(contact);
+                }
         }
 
         private void contactsLV_ItemMouseDoubleClick(object sender, ListViewItemEventArgs e)
         {
             Contact contact = (Contact)e.Item.Value;
-            var form = new ContactForm(contact);
-            form.ShowDialog(this);
+            var form = new ContactForm(contact.Id);
+            var result = form.ShowDialog(this);
+            if (result != DialogResult.Cancel)
+            {
+                SetItems();
+            }
         }
 
         private void searchTB_TextChanged(object sender, EventArgs e)
@@ -56,7 +61,11 @@ namespace ePhoneBook
         private void newContactBtn_Click(object sender, EventArgs e)
         {
             var form = new NewContactForm();
-            form.ShowDialog(this);
+            var result = form.ShowDialog(this);
+            if (result != DialogResult.Cancel)
+            {
+                SetItems();
+            }
         }
     }
 }

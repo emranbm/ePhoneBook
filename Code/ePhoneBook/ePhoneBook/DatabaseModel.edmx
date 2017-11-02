@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -17,13 +17,15 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Number" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ContactId" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__PhoneNumb__Conta__01142BA1">
-          <End Role="Contacts" Type="Self.Contacts" Multiplicity="1" />
+        <Association Name="FK__PhoneNumb__Conta__2739D489">
+          <End Role="Contacts" Type="Self.Contacts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PhoneNumbers" Type="Self.PhoneNumbers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Contacts">
@@ -37,7 +39,7 @@
         <EntityContainer Name="DatabaseModelStoreContainer">
           <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhoneNumbers" EntityType="Self.PhoneNumbers" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__PhoneNumb__Conta__01142BA1" Association="Self.FK__PhoneNumb__Conta__01142BA1">
+          <AssociationSet Name="FK__PhoneNumb__Conta__2739D489" Association="Self.FK__PhoneNumb__Conta__2739D489">
             <End Role="Contacts" EntitySet="Contacts" />
             <End Role="PhoneNumbers" EntitySet="PhoneNumbers" />
           </AssociationSet>

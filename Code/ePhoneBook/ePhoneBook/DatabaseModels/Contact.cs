@@ -12,5 +12,10 @@ namespace ePhoneBook
         {
             return FirstName == other.FirstName && LastName == other.LastName;
         }
+
+        public override string ToString()
+        {
+            return string.Format("<html><b>{0}</b>, {1}", LastName, FirstName);
+        }
     }
 }

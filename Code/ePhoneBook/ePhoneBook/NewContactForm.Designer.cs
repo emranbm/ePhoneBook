@@ -31,11 +31,11 @@
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label label2;
             System.Windows.Forms.Label label3;
-            Telerik.WinControls.UI.ListViewDetailColumn listViewDetailColumn3 = new Telerik.WinControls.UI.ListViewDetailColumn("Column 0", "Title");
-            Telerik.WinControls.UI.ListViewDetailColumn listViewDetailColumn4 = new Telerik.WinControls.UI.ListViewDetailColumn("Column 1", "Number");
-            Telerik.WinControls.UI.RadListDataItem radListDataItem4 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem5 = new Telerik.WinControls.UI.RadListDataItem();
-            Telerik.WinControls.UI.RadListDataItem radListDataItem6 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.ListViewDetailColumn listViewDetailColumn1 = new Telerik.WinControls.UI.ListViewDetailColumn("Column 0", "Title");
+            Telerik.WinControls.UI.ListViewDetailColumn listViewDetailColumn2 = new Telerik.WinControls.UI.ListViewDetailColumn("Column 1", "Number");
+            Telerik.WinControls.UI.RadListDataItem radListDataItem1 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem2 = new Telerik.WinControls.UI.RadListDataItem();
+            Telerik.WinControls.UI.RadListDataItem radListDataItem3 = new Telerik.WinControls.UI.RadListDataItem();
             this.firstNameTB = new System.Windows.Forms.TextBox();
             this.lastNameTB = new System.Windows.Forms.TextBox();
             this.phoneNumbersLV = new Telerik.WinControls.UI.RadListView();
@@ -107,13 +107,13 @@
             this.phoneNumbersLV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            listViewDetailColumn3.HeaderText = "Title";
-            listViewDetailColumn3.Width = 75F;
-            listViewDetailColumn4.HeaderText = "Number";
-            listViewDetailColumn4.MinWidth = 50F;
+            listViewDetailColumn1.HeaderText = "Title";
+            listViewDetailColumn1.Width = 75F;
+            listViewDetailColumn2.HeaderText = "Number";
+            listViewDetailColumn2.MinWidth = 50F;
             this.phoneNumbersLV.Columns.AddRange(new Telerik.WinControls.UI.ListViewDetailColumn[] {
-            listViewDetailColumn3,
-            listViewDetailColumn4});
+            listViewDetailColumn1,
+            listViewDetailColumn2});
             this.phoneNumbersLV.ItemSpacing = -1;
             this.phoneNumbersLV.Location = new System.Drawing.Point(12, 147);
             this.phoneNumbersLV.Name = "phoneNumbersLV";
@@ -126,12 +126,12 @@
             // 
             // titleDD
             // 
-            radListDataItem4.Text = "Home";
-            radListDataItem5.Text = "Mobile";
-            radListDataItem6.Text = "Work";
-            this.titleDD.Items.Add(radListDataItem4);
-            this.titleDD.Items.Add(radListDataItem5);
-            this.titleDD.Items.Add(radListDataItem6);
+            radListDataItem1.Text = "Home";
+            radListDataItem2.Text = "Mobile";
+            radListDataItem3.Text = "Work";
+            this.titleDD.Items.Add(radListDataItem1);
+            this.titleDD.Items.Add(radListDataItem2);
+            this.titleDD.Items.Add(radListDataItem3);
             this.titleDD.Location = new System.Drawing.Point(12, 91);
             this.titleDD.Name = "titleDD";
             this.titleDD.Size = new System.Drawing.Size(87, 20);
@@ -160,6 +160,7 @@
             // 
             // saveBtn
             // 
+            this.saveBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.saveBtn.Location = new System.Drawing.Point(188, 272);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(110, 24);
@@ -180,6 +181,7 @@
             // 
             // cancelBtn
             // 
+            this.cancelBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelBtn.Location = new System.Drawing.Point(72, 272);
             this.cancelBtn.Name = "cancelBtn";
@@ -189,7 +191,6 @@
             // 
             // NewContactForm
             // 
-            this.AcceptButton = this.saveBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelBtn;
@@ -228,14 +229,14 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox firstNameTB;
-        private System.Windows.Forms.TextBox lastNameTB;
-        private Telerik.WinControls.UI.RadListView phoneNumbersLV;
-        private Telerik.WinControls.UI.RadDropDownList titleDD;
-        private System.Windows.Forms.TextBox numberTB;
-        private Telerik.WinControls.UI.RadButton addBtn;
-        private Telerik.WinControls.UI.RadButton saveBtn;
-        private Telerik.WinControls.UI.RadButton removeBtn;
-        private Telerik.WinControls.UI.RadButton cancelBtn;
+        protected System.Windows.Forms.TextBox firstNameTB;
+        protected System.Windows.Forms.TextBox lastNameTB;
+        protected Telerik.WinControls.UI.RadListView phoneNumbersLV;
+        protected Telerik.WinControls.UI.RadDropDownList titleDD;
+        protected System.Windows.Forms.TextBox numberTB;
+        protected Telerik.WinControls.UI.RadButton addBtn;
+        protected Telerik.WinControls.UI.RadButton saveBtn;
+        protected Telerik.WinControls.UI.RadButton removeBtn;
+        protected Telerik.WinControls.UI.RadButton cancelBtn;
     }
 }
