@@ -11,7 +11,7 @@ using Telerik.WinControls.UI;
 
 namespace ePhoneBook
 {
-    public partial class MainForm : Form
+    public partial class MainForm : RadForm
     {
         public MainForm()
         {
@@ -19,7 +19,7 @@ namespace ePhoneBook
             DatabaseEntities entities = new DatabaseEntities();
             foreach (var contact in entities.Contacts)
             {
-                contactsLV.Items.Add(contact);
+                ContactsLV.Items.Add(contact);
             }
         }
 
