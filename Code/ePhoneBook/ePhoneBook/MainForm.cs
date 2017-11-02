@@ -52,5 +52,11 @@ namespace ePhoneBook
             else
                 return ((contact.LastName + contact.FirstName).ToUpper().Contains(searchTB.Text.ToUpper()));
         }
+
+        private void newContactBtn_Click(object sender, EventArgs e)
+        {
+            var form = new NewContactForm();
+            form.ShowDialog(this);
+        }
     }
 }
