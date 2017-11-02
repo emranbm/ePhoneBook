@@ -1,6 +1,6 @@
 ﻿namespace ePhoneBook
 {
-    partial class NewContactForm
+    partial class EditableContactForm
     {
         /// <summary>
         /// Required designer variable.
@@ -86,7 +86,7 @@
             // 
             // firstNameTB
             // 
-            this.firstNameTB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.firstNameTB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.firstNameTB.Location = new System.Drawing.Point(82, 12);
             this.firstNameTB.Name = "firstNameTB";
@@ -95,7 +95,7 @@
             // 
             // lastNameTB
             // 
-            this.lastNameTB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lastNameTB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lastNameTB.Location = new System.Drawing.Point(82, 38);
             this.lastNameTB.Name = "lastNameTB";
@@ -104,8 +104,8 @@
             // 
             // phoneNumbersLV
             // 
-            this.phoneNumbersLV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.phoneNumbersLV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             listViewDetailColumn1.HeaderText = "Title";
             listViewDetailColumn1.Width = 75F;
@@ -140,7 +140,7 @@
             // 
             // numberTB
             // 
-            this.numberTB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.numberTB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.numberTB.Location = new System.Drawing.Point(105, 91);
             this.numberTB.Name = "numberTB";

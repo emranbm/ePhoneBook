@@ -7,11 +7,11 @@ using System.Windows.Forms;
 
 namespace ePhoneBook
 {
-    class EditContactForm : NewContactForm
+    class EditContactForm : EditableContactForm
     {
         private readonly int _contactId;
 
-        public EditContactForm(int contactId)
+        public EditContactForm(int contactId) : base("Edit Contact")
         {
             using (var entities = new DatabaseEntities())
             {
@@ -52,12 +52,12 @@ namespace ePhoneBook
             Close();
         }
 
-        protected override List<PhoneNumber> GetPhoneNumbers()
+        private List<PhoneNumber> GetFilteredPhoneNumbers()
         {
             using (var entities = new DatabaseEntities())
             {
                 var contact = entities.GetContactById(_contactId);
-                var newPhoneNums = base.GetPhoneNumbers().FindAll((phoneNum) =>
+                var newPhoneNums = GetPhoneNumbers().FindAll((phoneNum) =>
                     {
                         return
                         (from p in contact.PhoneNumbers
@@ -70,11 +70,11 @@ namespace ePhoneBook
             }
         }
 
-        protected bool UpdateContact(DatabaseEntities entities, Contact contact)
+        private bool UpdateContact(DatabaseEntities entities, Contact contact)
         {
             contact.FirstName = firstNameTB.Text;
             contact.LastName = lastNameTB.Text;
-            var phoneNumbers = GetPhoneNumbers();
+            var phoneNumbers = GetFilteredPhoneNumbers();
             var arePhonesValid = ValidatePhoneNumbers(entities, phoneNumbers);
             if (!arePhonesValid)
                 return false;

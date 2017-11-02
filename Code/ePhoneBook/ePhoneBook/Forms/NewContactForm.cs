@@ -11,50 +11,14 @@ using Telerik.WinControls.UI;
 
 namespace ePhoneBook
 {
-    public partial class NewContactForm : RadForm
+    public partial class NewContactForm : EditableContactForm
     {
-        public NewContactForm()
+        public NewContactForm() : base ("New Contact")
         {
             InitializeComponent();
         }
 
-        private void addBtn_Click(object sender, EventArgs e)
-        {
-            if (numberTB.Text == string.Empty || titleDD.Text == string.Empty)
-                return;
-
-            phoneNumbersLV.Items.Add(titleDD.Text, numberTB.Text);
-
-            numberTB.Text = string.Empty;
-        }
-
-        private void phoneNumbersLV_SelectedItemChanged(object sender, EventArgs e)
-        {
-            removeBtn.Enabled = phoneNumbersLV.SelectedItem != null;
-        }
-
-        private void removeBtn_Click(object sender, EventArgs e)
-        {
-            int index = phoneNumbersLV.SelectedIndex;
-            if (index < 0)
-                return;
-
-            phoneNumbersLV.Items.RemoveAt(index);
-        }
-
-        private void numberTB_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                addBtn_Click(sender, e);
-        }
-
-        private void phoneNumbersLV_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-                removeBtn_Click(sender, e);
-        }
-
-        protected virtual void saveBtn_Click(object sender, EventArgs e)
+        protected override void saveBtn_Click(object sender, EventArgs e)
         {
             bool isFormValid = ValidateForm();
             if (!isFormValid)
@@ -111,43 +75,6 @@ namespace ePhoneBook
                     // TODO merge contacts
                     return false;
                 }
-            }
-
-            return true;
-        }
-
-        protected virtual List<PhoneNumber> GetPhoneNumbers()
-        {
-            var list = new List<PhoneNumber>();
-
-            foreach (var p in phoneNumbersLV.Items)
-            {
-                list.Add(new PhoneNumber()
-                {
-                    Title = p[0].ToString(),
-                    Number = p[1].ToString()
-                });
-            }
-
-            return list;
-        }
-
-        protected bool ValidateForm()
-        {
-            if (firstNameTB.Text == string.Empty)
-            {
-                MessageBox.Show("First Name field is empty", "Incomplete fields");
-                return false;
-            }
-            if (lastNameTB.Text == string.Empty)
-            {
-                MessageBox.Show("Last Name field is empty", "Incomplete fields");
-                return false;
-            }
-            if (phoneNumbersLV.Items.Count == 0)
-            {
-                MessageBox.Show("At least 1 phone number is required", "Incomplete fields");
-                return false;
             }
 
             return true;
