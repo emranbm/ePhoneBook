@@ -17,16 +17,17 @@ namespace ePhoneBook
         {
             InitializeComponent();
             DatabaseEntities entities = new DatabaseEntities();
-            foreach (var contact in entities.Contacts)
+            foreach (var contact in entities.Contacts.OrderBy((contact) => contact.LastName).ThenBy((contact) => contact.FirstName))
             {
-                ContactsLV.Items.Add(contact);
+                contactsLV.Items.Add(contact);
             }
         }
 
         private void contactsLV_ItemMouseDoubleClick(object sender, ListViewItemEventArgs e)
         {
             Contact contact = (Contact)e.Item.Value;
-            MessageBox.Show(contact.FirstName);
+            var form = new ContactForm(contact);
+            form.ShowDialog(this);
         }
     }
 }
