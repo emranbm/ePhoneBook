@@ -11,21 +11,21 @@ namespace ePhoneBook
     {
         private readonly int _contactId;
 
-        public EditContactForm(int contactId) : base("Edit Contact")
+        public EditContactForm(int contactId)
         {
+            _contactId = contactId;
+
             using (var entities = new DatabaseEntities())
             {
                 var contact = entities.GetContactById(contactId);
                 SetData(contact);
             }
-
-            _contactId = contactId;
         }
 
         private void SetData(Contact contact)
         {
             Text = "Edit " + contact.FirstName;
-            firstNameTB.Text = Text = contact.FirstName;
+            firstNameTB.Text = contact.FirstName;
             lastNameTB.Text = contact.LastName;
             foreach (var phoneNum in contact.PhoneNumbers)
             {

@@ -13,8 +13,9 @@ namespace ePhoneBook
 {
     public partial class NewContactForm : EditableContactForm
     {
-        public NewContactForm() : base ("New Contact")
+        public NewContactForm()
         {
+            Text = "New Contact";
             InitializeComponent();
         }
 

@@ -11,12 +11,11 @@ using Telerik.WinControls.UI;
 
 namespace ePhoneBook
 {
-    public abstract partial class EditableContactForm : RadForm
+    public partial class EditableContactForm : RadForm
     {
-        public EditableContactForm(string title)
+        public EditableContactForm()
         {
             InitializeComponent();
-            Text = title;
         }
 
         protected virtual void addBtn_Click(object sender, EventArgs e)
@@ -55,7 +54,7 @@ namespace ePhoneBook
                 removeBtn_Click(sender, e);
         }
 
-        protected abstract void saveBtn_Click(object sender, EventArgs e);
+        protected virtual void saveBtn_Click(object sender, EventArgs e) { }
         
 
         protected List<PhoneNumber> GetPhoneNumbers()
