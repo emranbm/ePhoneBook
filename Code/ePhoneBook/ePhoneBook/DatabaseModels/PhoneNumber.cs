@@ -12,5 +12,10 @@ namespace ePhoneBook
         {
             return Number == other.Number;
         }
+
+        public override int GetHashCode()
+        {
+            return Number?.GetHashCode() ?? 0;
+        }
     }
 }

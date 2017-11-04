@@ -52,34 +52,51 @@ namespace ePhoneBook
             Close();
         }
 
-        private List<PhoneNumber> GetFilteredPhoneNumbers()
+        private List<PhoneNumber> GetNewPhoneNumbers(DatabaseEntities entities)
         {
-            using (var entities = new DatabaseEntities())
+            var contact = entities.GetContactById(_contactId);
+            var newPhoneNums = GetPhoneNumbers().FindAll((phoneNum) =>
             {
-                var contact = entities.GetContactById(_contactId);
-                var newPhoneNums = GetPhoneNumbers().FindAll((phoneNum) =>
-                    {
-                        return
-                        (from p in contact.PhoneNumbers
-                         where p.Number == phoneNum.Number
-                         select p)
-                         .FirstOrDefault() == null;
-                    });
+                return
+                !(from p in contact.PhoneNumbers
+                  where p.Number == phoneNum.Number
+                  select p).Any();
+            });
 
-                return newPhoneNums;
-            }
+            return newPhoneNums;
+        }
+
+        private List<PhoneNumber> GetRemovedPhoneNumbers(DatabaseEntities entities)
+        {
+            var phonesInForm = GetPhoneNumbers();
+            var contact = entities.GetContactById(_contactId);
+            var removedPhoneNums = (from p in contact.PhoneNumbers
+                                    where !(from pif in phonesInForm where pif.Number == p.Number select pif).Any()
+                                    select p).ToList();
+
+            return removedPhoneNums;
         }
 
         private bool UpdateContact(DatabaseEntities entities, Contact contact)
         {
             contact.FirstName = firstNameTB.Text;
             contact.LastName = lastNameTB.Text;
-            var phoneNumbers = GetFilteredPhoneNumbers();
-            var arePhonesValid = ValidatePhoneNumbers(entities, phoneNumbers);
+            var newPhoneNumbers = GetNewPhoneNumbers(entities);
+            var arePhonesValid = ValidatePhoneNumbers(entities, newPhoneNumbers);
             if (!arePhonesValid)
                 return false;
-            foreach (var num in phoneNumbers)
+            foreach (var num in newPhoneNumbers)
                 contact.PhoneNumbers.Add(num);
+
+            var removedPhoneNumbers = GetRemovedPhoneNumbers(entities);
+
+            //foreach (var removedPhone in removedPhoneNumbers)
+            {
+                //    contact.PhoneNumbers.Remove(removedPhone);
+            }
+
+            entities.PhoneNumbers.RemoveRange(removedPhoneNumbers);
+
             return true;
         }
         private bool ValidatePhoneNumbers(DatabaseEntities entities, IEnumerable<PhoneNumber> phoneNumbers)
