@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace ePhoneBook
 {
-    public partial class PhoneNumber : IEquatable<PhoneNumber>
+    public partial class PhoneNumber
     {
-        bool IEquatable<PhoneNumber>.Equals(PhoneNumber other)
+        public override bool Equals(Object other)
         {
-            return Number == other.Number;
+            var otherPhone = other as PhoneNumber;
+            return otherPhone != null && Number == otherPhone.Number;
         }
 
         public override int GetHashCode()

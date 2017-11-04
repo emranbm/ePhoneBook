@@ -93,5 +93,28 @@ namespace ePhoneBook
 
             return true;
         }
+        
+        protected List<PhoneNumber> GetNewPhoneNumbers(Contact contact)
+        {
+            var newPhoneNums = GetPhoneNumbers().FindAll((phoneNum) =>
+            {
+                return
+                !(from p in contact.PhoneNumbers
+                  where p.Number == phoneNum.Number
+                  select p).Any();
+            });
+
+            return newPhoneNums;
+        }
+
+        protected List<PhoneNumber> GetRemovedPhoneNumbers(Contact contact)
+        {
+            var phonesInForm = GetPhoneNumbers();
+            var removedPhoneNums = (from p in contact.PhoneNumbers
+                                    where !(from pif in phonesInForm where pif.Number == p.Number select pif).Any()
+                                    select p).ToList();
+
+            return removedPhoneNums;
+        }
     }
 }

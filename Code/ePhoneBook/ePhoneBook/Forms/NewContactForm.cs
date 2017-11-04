@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -32,25 +33,29 @@ namespace ePhoneBook
                     LastName = lastNameTB.Text
                 };
 
-                var sameContacts = from c in entities.Contacts
-                                   where c.FirstName == contact.FirstName
-                                   && c.LastName == contact.LastName
-                                   select c;
+                var repetitiveContact = GetRepetitiveContact(entities.Contacts, contact);
 
-                if (sameContacts.Any())
+                if (repetitiveContact == null)
                 {
-                    MessageBox.Show("A contact with the given name already exists", "Contact already exists");
-                    // TODO merge contacts
-                    return;
+                    var phoneNumbers = GetPhoneNumbers();
+                    var repetitivePhone = GetRepetitivePhoneNumber(entities.PhoneNumbers, phoneNumbers);
+                    if (repetitivePhone == null)
+                    {
+                        contact.PhoneNumbers = phoneNumbers;
+                        entities.Contacts.Add(contact);
+                    }
+                    else
+                    {
+                        if (!HandleRepetitivePhone(contact, repetitivePhone))
+                            return;
+                    }
+                }
+                else
+                {
+                    if(!HandleRepetitiveContact(repetitiveContact))
+                        return;
                 }
 
-                var phoneNumbers = GetPhoneNumbers();
-                var arePhonesValid = ValidatePhoneNumbers(entities, phoneNumbers);
-                if (!arePhonesValid)
-                    return;
-                contact.PhoneNumbers = phoneNumbers;
-
-                entities.Contacts.Add(contact);
                 entities.SaveChanges();
             }
 
@@ -58,26 +63,85 @@ namespace ePhoneBook
             Close();
         }
 
-        private bool ValidatePhoneNumbers(DatabaseEntities entities, IEnumerable<PhoneNumber> phoneNumbers)
+        private bool HandleRepetitivePhone(Contact contact, PhoneNumber repetitivePhone)
+        {
+            var repetitiveContact = repetitivePhone.Contact;
+            var result = MessageBox.Show(
+                string.Format(
+                    "A contact with the phone number {0} and the name \"{1} {2}\" already exists. Do you want to merge with that contact?",
+                    repetitivePhone.Number,
+                    repetitiveContact.FirstName,
+                    repetitiveContact.LastName),
+                "Phone number already exists",
+                MessageBoxButtons.YesNo);
+            if (result == DialogResult.No)
+                return false;
+            else
+            {
+                MergeContact(repetitiveContact);
+                if (!contact.Equals(repetitiveContact))
+                {
+                    result = MessageBox.Show(
+                        string.Format(
+                            "Do you want to update the merged contact with the new name?{0}Old Name: {1} {2}{0}New Name: {3} {4}",
+                            Environment.NewLine,
+                            repetitiveContact.FirstName, repetitiveContact.LastName,
+                            contact.FirstName, contact.LastName),
+                        "Update contact name",
+                        MessageBoxButtons.YesNo);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        repetitiveContact.FirstName = firstNameTB.Text;
+                        repetitiveContact.LastName = lastNameTB.Text;
+                    }
+                }
+                return true;
+            }
+        }
+
+        private bool HandleRepetitiveContact(Contact repetitiveContact)
+        {
+            var result = MessageBox.Show("A contact with the given name already exists. Do you want to merge it?", "Contact already exists", MessageBoxButtons.YesNo);
+            if (result == DialogResult.No)
+                return false;
+            else
+                MergeContact(repetitiveContact);
+            return true;
+        }
+
+        private void MergeContact(Contact contact)
+        {
+            var newPhones = GetNewPhoneNumbers(contact);
+
+            foreach (var phoneNum in newPhones)
+                contact.PhoneNumbers.Add(phoneNum);
+        }
+
+        private PhoneNumber GetRepetitivePhoneNumber(DbSet<PhoneNumber> allPhoneNumbers, IEnumerable<PhoneNumber> phoneNumbers)
         {
             foreach (var phoneNum in phoneNumbers)
             {
-                var samePhones = from p in entities.PhoneNumbers
+                var samePhones = from p in allPhoneNumbers
                                  where p.Number == phoneNum.Number
                                  select p;
                 if (samePhones.Any())
                 {
-                    MessageBox.Show(
-                        string.Format(
-                            "A contact with the phone number {0} already exists.",
-                            phoneNum.Number),
-                        "Phone number already exists");
-                    // TODO merge contacts
-                    return false;
+                    return samePhones.First();
                 }
             }
 
-            return true;
+            return null;
+        }
+
+        private Contact GetRepetitiveContact(DbSet<Contact> allContacts, Contact contact)
+        {
+            var sameContacts = from c in allContacts
+                               where c.FirstName == contact.FirstName
+                               && c.LastName == contact.LastName
+                               select c;
+
+            return sameContacts.FirstOrDefault();
         }
     }
 }

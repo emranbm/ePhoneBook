@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,58 +53,28 @@ namespace ePhoneBook
             Close();
         }
 
-        private List<PhoneNumber> GetNewPhoneNumbers(DatabaseEntities entities)
-        {
-            var contact = entities.GetContactById(_contactId);
-            var newPhoneNums = GetPhoneNumbers().FindAll((phoneNum) =>
-            {
-                return
-                !(from p in contact.PhoneNumbers
-                  where p.Number == phoneNum.Number
-                  select p).Any();
-            });
-
-            return newPhoneNums;
-        }
-
-        private List<PhoneNumber> GetRemovedPhoneNumbers(DatabaseEntities entities)
-        {
-            var phonesInForm = GetPhoneNumbers();
-            var contact = entities.GetContactById(_contactId);
-            var removedPhoneNums = (from p in contact.PhoneNumbers
-                                    where !(from pif in phonesInForm where pif.Number == p.Number select pif).Any()
-                                    select p).ToList();
-
-            return removedPhoneNums;
-        }
-
         private bool UpdateContact(DatabaseEntities entities, Contact contact)
         {
             contact.FirstName = firstNameTB.Text;
             contact.LastName = lastNameTB.Text;
-            var newPhoneNumbers = GetNewPhoneNumbers(entities);
-            var arePhonesValid = ValidatePhoneNumbers(entities, newPhoneNumbers);
+            var newPhoneNumbers = GetNewPhoneNumbers(contact);
+            var arePhonesValid = ValidatePhoneNumbers(entities.PhoneNumbers, newPhoneNumbers);
             if (!arePhonesValid)
                 return false;
             foreach (var num in newPhoneNumbers)
                 contact.PhoneNumbers.Add(num);
 
-            var removedPhoneNumbers = GetRemovedPhoneNumbers(entities);
-
-            //foreach (var removedPhone in removedPhoneNumbers)
-            {
-                //    contact.PhoneNumbers.Remove(removedPhone);
-            }
+            var removedPhoneNumbers = GetRemovedPhoneNumbers(contact);
 
             entities.PhoneNumbers.RemoveRange(removedPhoneNumbers);
 
             return true;
         }
-        private bool ValidatePhoneNumbers(DatabaseEntities entities, IEnumerable<PhoneNumber> phoneNumbers)
+        private bool ValidatePhoneNumbers(DbSet<PhoneNumber> allPhoneNumbers, IEnumerable<PhoneNumber> phoneNumbers)
         {
             foreach (var phoneNum in phoneNumbers)
             {
-                var samePhones = from p in entities.PhoneNumbers
+                var samePhones = from p in allPhoneNumbers
                                  where p.Number == phoneNum.Number
                                  select p;
                 if (samePhones.Any())
