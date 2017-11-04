@@ -11,12 +11,11 @@ using Telerik.WinControls.UI;
 
 namespace ePhoneBook
 {
-    public partial class NewContactForm : EditableContactForm
+    class NewContactForm : EditableContactForm
     {
         public NewContactForm()
         {
             Text = "New Contact";
-            InitializeComponent();
         }
 
         protected override void saveBtn_Click(object sender, EventArgs e)

@@ -117,9 +117,6 @@
     <Compile Include="Forms\NewContactForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\NewContactForm.Designer.cs">
-      <DependentUpon>NewContactForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="PhoneNumber.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
