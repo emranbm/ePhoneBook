@@ -28,9 +28,13 @@ namespace ePhoneBook
         {
             using (var entities = new DatabaseEntities())
             {
-                Contact contact = (from c in entities.Contacts
-                                   where c.Id == _contactId
-                                   select c).First();
+                Contact contact = entities.GetContactById(_contactId);
+
+                if (contact == null)
+                {
+                    Close();
+                    return;
+                }
 
                 firstNameLbl.Text = Text = contact.FirstName;
                 lastNameLbl.Text = contact.LastName;
@@ -66,7 +70,7 @@ namespace ePhoneBook
         private void editBtn_Click(object sender, EventArgs e)
         {
             var form = new EditContactForm(_contactId);
-            var result = form.ShowDialog(this);
+            var result = form.ShowDialog();
             if (result != DialogResult.Cancel)
             {
                 DialogResult = DialogResult.OK;

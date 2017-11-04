@@ -12,7 +12,7 @@ namespace ePhoneBook
         {
             return (from c in entities.Contacts
                     where c.Id == id
-                    select c).First();
+                    select c).Single();
         }
     }
 }

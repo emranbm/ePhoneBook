@@ -117,6 +117,7 @@
     <Compile Include="Forms\NewContactForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Helpers\EntityHelper.cs" />
     <Compile Include="PhoneNumber.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>

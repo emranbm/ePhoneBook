@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ePhoneBook.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -58,34 +59,39 @@ namespace ePhoneBook
             contact.FirstName = firstNameTB.Text;
             contact.LastName = lastNameTB.Text;
             var newPhoneNumbers = GetNewPhoneNumbers(contact);
-            var arePhonesValid = ValidatePhoneNumbers(entities.PhoneNumbers, newPhoneNumbers);
-            if (!arePhonesValid)
-                return false;
-            foreach (var num in newPhoneNumbers)
-                contact.PhoneNumbers.Add(num);
-
-            var removedPhoneNumbers = GetRemovedPhoneNumbers(contact);
-
-            entities.PhoneNumbers.RemoveRange(removedPhoneNumbers);
-
-            return true;
-        }
-        private bool ValidatePhoneNumbers(DbSet<PhoneNumber> allPhoneNumbers, IEnumerable<PhoneNumber> phoneNumbers)
-        {
-            foreach (var phoneNum in phoneNumbers)
+            var repetitivePhone = EntityHelper.GetRepetitivePhoneNumber(entities.PhoneNumbers, newPhoneNumbers);
+            if (repetitivePhone != null)
             {
-                var samePhones = from p in allPhoneNumbers
-                                 where p.Number == phoneNum.Number
-                                 select p;
-                if (samePhones.Any())
+                if (HandleRepetitivePhone(contact, repetitivePhone))
                 {
-                    MessageBox.Show(
-                        string.Format(
-                            "A contact with the phone number {0} already exists.",
-                            phoneNum.Number),
-                        "Phone number already exists");
-                    // TODO merge contacts
+                    entities.PhoneNumbers.RemoveRange(contact.PhoneNumbers);
+                    entities.Contacts.Remove(contact);
+                }
+                else
                     return false;
+            }
+            else
+            {
+                var repetitiveContact = EntityHelper.GetRepetitiveContact(entities.Contacts, contact);
+
+                if (repetitiveContact != null)
+                {
+                    if (HandleRepetitiveContact(repetitiveContact))
+                    {
+                        entities.PhoneNumbers.RemoveRange(contact.PhoneNumbers);
+                        entities.Contacts.Remove(contact);
+                    }
+                    else
+                        return false;
+                }
+                else
+                {
+                    foreach (var num in newPhoneNumbers)
+                        contact.PhoneNumbers.Add(num);
+
+                    var removedPhoneNumbers = GetRemovedPhoneNumbers(contact);
+
+                    entities.PhoneNumbers.RemoveRange(removedPhoneNumbers);
                 }
             }
 
