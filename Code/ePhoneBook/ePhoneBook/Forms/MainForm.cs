@@ -18,7 +18,7 @@ namespace ePhoneBook
             InitializeComponent();
             SetItems();
 
-            contactsLV.FilterPredicate = Filter;
+            contactsLV.FilterPredicate = ContactsListFilter;
         }
 
         private void SetItems()
@@ -48,7 +48,7 @@ namespace ePhoneBook
             contactsLV.EnableFiltering = true;
         }
 
-        private bool Filter(ListViewDataItem item)
+        private bool ContactsListFilter(ListViewDataItem item)
         {
             Contact contact = (Contact)item.Value;
 
@@ -63,9 +63,7 @@ namespace ePhoneBook
             var form = new NewContactForm();
             var result = form.ShowDialog(this);
             if (result != DialogResult.Cancel)
-            {
                 SetItems();
-            }
         }
     }
 }
