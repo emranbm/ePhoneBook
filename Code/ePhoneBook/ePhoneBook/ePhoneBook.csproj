@@ -97,7 +97,6 @@
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="DatabaseModels\Contact.cs" />
-    <Compile Include="DatabaseModels\ContextHelper.cs" />
     <Compile Include="DatabaseModels\PhoneNumber.cs" />
     <Compile Include="Forms\EditContactForm.cs">
       <SubType>Form</SubType>
